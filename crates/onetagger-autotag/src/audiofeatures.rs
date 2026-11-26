@@ -244,7 +244,7 @@ impl AudioFeatures {
         // Fallback
         if track_id.is_none() {
             let q = format!("{} {}", track.artists.first().ok_or(anyhow!("Track is missing artist"))?.to_lowercase(), MatchingUtils::clean_title(track.title()?));
-            let results = spotify.search_tracks(&q, 20)?;
+            let results = spotify.search_tracks(&q, 10)?;
             // Match
             for t in results {
                 let title_1 = MatchingUtils::clean_title_matching(&t.name);

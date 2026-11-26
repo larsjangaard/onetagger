@@ -208,7 +208,7 @@ impl AutotaggerSource for Spotify {
         // Try ISRC
         if let Some(isrc) = info.isrc.as_ref() {
             let query = format!("isrc:{isrc}");
-            let results = self.search_tracks(&query, 20)?;
+            let results = self.search_tracks(&query, 10)?;
             let tracks: Vec<Track> = results.clone().into_iter().map(|t| full_track_to_track(t)).collect();
             if let Some(track) = tracks.first() {
                 return Ok(vec![TrackMatch::new_isrc(track.clone())]);
@@ -217,7 +217,7 @@ impl AutotaggerSource for Spotify {
 
         // Normal search
         let query = format!("{} {}", info.artist()?, MatchingUtils::clean_title(info.title()?));
-        let results = self.search_tracks(&query, 20)?;
+        let results = self.search_tracks(&query, 10)?;
         let tracks = results.clone().into_iter().map(|t| full_track_to_track(t)).collect();
         Ok(MatchingUtils::match_track(info, &tracks, config, true))
     }
